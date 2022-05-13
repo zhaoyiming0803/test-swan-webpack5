@@ -13,11 +13,11 @@ const app = getApp()
 
 console.log('test:::: ', test())
 
-AuthingMove.showToast({
-    title: '成功',
-    icon: 'success',
-    duration: 2000
-  })
+// AuthingMove.showToast({
+//     title: '成功',
+//     icon: 'success',
+//     duration: 2000
+//   })
 
 Page({
     data: {

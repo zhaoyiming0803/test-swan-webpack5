@@ -6,6 +6,9 @@
         }
     },
     "host": "baiduboxapp",
+    "preview": {
+        "packageId": 1451301
+    },
     "project-create-info": {
         "date": "2022/5/11",
         "dev-tool-version": "3.54.1"
@@ -16,8 +19,8 @@
     },
     "swan": {
         "baiduboxapp": {
-            "swanJsVersion": "3.450.8",
-            "extensionJsVersion": "1.21.2"
+            "extensionJsVersion": "1.21.2",
+            "swanJsVersion": "3.450.8"
         }
     }
 }
