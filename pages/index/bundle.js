@@ -18,8 +18,6 @@
 
     /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_instance__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
-    __webpack_require_authing__.g.AuthingMove = _instance__WEBPACK_IMPORTED_MODULE_0__["default"]
-
 
     /***/ }),
     /* 2 */
@@ -89,20 +87,17 @@
     /* harmony export */   "default": () => (/* binding */ install)
     /* harmony export */ });
     /* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(6);
-    /* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(7);
+    /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(7);
 
 
 
     function install (AuthingMove, options = {}) {
-      if (to === 'uni') {
-        return
-      }
-
       const {
-        custom = {} // 自定义转换规则
+        custom = {} // custom transform rules
       } = options
       const from = "wx" || 0
-      const to = "swan" || 0
+      const to = "baidu" || 0
+
 
       const transformedApi = (0,_transform__WEBPACK_IMPORTED_MODULE_0__["default"])({
         from,
@@ -119,7 +114,7 @@
 
           AuthingMove[api] = (...args) => transformedApi[api].apply(AuthingMove, args)
         } catch (e) {
-          (0,_shared__WEBPACK_IMPORTED_MODULE_1__.error)(`Call ${AuthingMove}.${api} error:` + JSON.stringify(e))
+          (0,_utils__WEBPACK_IMPORTED_MODULE_1__.error)(`Call ${AuthingMove}.${api} error:` + JSON.stringify(e))
         }
       })
     }
@@ -133,12 +128,12 @@
     /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
     /* harmony export */   "default": () => (/* binding */ transformApi)
     /* harmony export */ });
-    /* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(7);
-    /* harmony import */ var _platforms_wx_ali__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(8);
+    /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(7);
+    /* harmony import */ var _apis__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(8);
 
 
 
-    const fromMap = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.generateFromMap)()
+    const fromMap = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.generateFromMap)()
 
     function joinName (from = '', to = '') {
       const _from = `__authing_move_src_mode_${from}__`
@@ -146,17 +141,11 @@
     }
 
     function transformApi (options) {
-      const envContext = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.getEnvContext)()
-      const { from, to } = options
-      const fromTo = joinName(from, to)
-      const platformMap = {
-        'wx_ali': (0,_platforms_wx_ali__WEBPACK_IMPORTED_MODULE_1__["default"])()
-      }
+      const envContext = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getEnvContext)()
       const needProxy = Object.create(null)
-      const transformedApi = platformMap[fromTo] || {}
 
-      Object.keys(envContext).concat(Object.keys(transformedApi)).forEach(key => {
-        needProxy[key] = envContext[key] || transformedApi[key]
+      Object.keys(envContext).concat(Object.keys(_apis__WEBPACK_IMPORTED_MODULE_1__)).forEach(key => {
+        needProxy[key] = envContext[key] || _apis__WEBPACK_IMPORTED_MODULE_1__[key]
       })
 
       const apis = Object.create(null)
@@ -194,7 +183,7 @@
             return envContext[api].apply(this, args)
           }
 
-          (0,_shared__WEBPACK_IMPORTED_MODULE_0__.error)(`当前小程序环境不存在 ${api} 方法`)
+          (0,_utils__WEBPACK_IMPORTED_MODULE_0__.error)(`当前小程序环境不存在 ${api} 方法`)
         }
       })
 
@@ -219,12 +208,15 @@
     /* harmony export */   "warn": () => (/* binding */ warn)
     /* harmony export */ });
     function getEnvContext () {
-      switch ("swan") {
+      const noopEnv = {}
+
+      switch ("baidu") {
         case 'wx':
-          return /* AuthingMove replacement */AuthingMove
+        case 'Mpx':
+          return /* AuthingMove replacement */swan
         case 'ali':
           return my
-        case 'swan':
+        case 'baidu':
           return swan
         case 'qq':
           return qq
@@ -232,8 +224,10 @@
           return tt
         case 'jd':
           return jd
-        case 'qa':
+        case 'qa_webview':
           return qa
+        case 'qa_ux':
+          return noopEnv
         case 'Taro':
           return Taro
         case 'uni':
@@ -242,7 +236,7 @@
     }
 
     function generateFromMap () {
-      const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa']
+      const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa_webview', 'qa_ux']
       return platforms.reduce((map, platform) => {
         map[`__authing_move_src_mode_${platform}__`] = platform
         return map
@@ -299,105 +293,104 @@
 
     __webpack_require_authing__.r(__webpack_exports_authing__);
     /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
-    /* harmony export */   "default": () => (/* binding */ getWxToAliApi)
+    /* harmony export */   "getStorage": () => (/* reexport safe */ _store_storage__WEBPACK_IMPORTED_MODULE_3__.getStorage),
+    /* harmony export */   "login": () => (/* reexport safe */ _login_login__WEBPACK_IMPORTED_MODULE_0__.login),
+    /* harmony export */   "request": () => (/* reexport safe */ _network_request__WEBPACK_IMPORTED_MODULE_1__.request),
+    /* harmony export */   "scanCode": () => (/* reexport safe */ _scan_scan__WEBPACK_IMPORTED_MODULE_2__.scanCode),
+    /* harmony export */   "setStorage": () => (/* reexport safe */ _store_storage__WEBPACK_IMPORTED_MODULE_3__.setStorage)
     /* harmony export */ });
-    /* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(7);
+    /* harmony import */ var _login_login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(9);
+    /* harmony import */ var _network_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(10);
+    /* harmony import */ var _scan_scan__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require_authing__(11);
+    /* harmony import */ var _store_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require_authing__(12);
 
 
-    const envContext = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.getEnvContext)()
 
-    function getWxToAliApi () {
-      return {
-        /**
-         * 网络
-         */
-        request (options = {}) {
-          const _options = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(options, {
-            header: 'headers'
-          })
 
-          ;(0,_shared__WEBPACK_IMPORTED_MODULE_0__.handleSuccess)(_options, res => {
-            return (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(res, {
-              Headers: 'header',
-              status: 'statusCode'
-            })
-          })
 
-          // version > 1.11.0
-          if (envContext.canIUse('request')) {
-            return envContext.request(_options)
-          }
 
-          // will be archived, support dingding miniprogram
-          return envContext.httpRequest(_options)
-        },
+    /***/ }),
+    /* 9 */
+    /***/ ((__unused_webpack_module, __webpack_exports_authing__, __webpack_require_authing__) => {
 
-        /**
-         * 数据缓存
-         */
-        setStorageSync (key, data) {
-          envContext.setStorageSync({
-            key,
-            data
-          })
-        },
+    /* AuthongMove cjs variable */ var AuthingMove = __webpack_require_authing__(1).default;
+    __webpack_require_authing__.r(__webpack_exports_authing__);
+    /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
+    /* harmony export */   "login": () => (/* binding */ login)
+    /* harmony export */ });
+    function login (options = {}) {
+      return /* AuthingMove replacement */swan.login(options)
+    }
 
-        removeStorageSync (key) {
-          envContext.removeStorageSync({ key })
-        },
 
-        getStorageSync (key) {
-          return envContext.getStorageSync({ key }).data
-        },
+    /***/ }),
+    /* 10 */
+    /***/ ((__unused_webpack_module, __webpack_exports_authing__, __webpack_require_authing__) => {
 
-        /**
-         * 扫码
-         */
-        scanCode (options = {}) {
-          const _options = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(options, {
-            onlyFromCamera: 'hideAlbum',
-            scanType: 'type'
-          })
+    /* AuthongMove cjs variable */ var AuthingMove = __webpack_require_authing__(1).default;
+    __webpack_require_authing__.r(__webpack_exports_authing__);
+    /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
+    /* harmony export */   "request": () => (/* binding */ request)
+    /* harmony export */ });
+    function request (options = {}) {
+      return /* AuthingMove replacement */swan.request(options)
+    }
 
-          const typeMap = {
-            barCode: 'bar',
-            qrCode: 'qr'
-          }
 
-          if (_options.type) {
-            const _type = typeMap[_options.type]
-            if (_type) {
-              _options.type = _type
-            } else {
-              (0,_shared__WEBPACK_IMPORTED_MODULE_0__.error)('支付宝小程序只能扫描【条形码】和【二维码】，请将 type 设置为 barCode 或 qrCode !!!')
-              _options.type = 'qr'
-            }
-          }
+    /***/ }),
+    /* 11 */
+    /***/ ((__unused_webpack_module, __webpack_exports_authing__, __webpack_require_authing__) => {
 
-          (0,_shared__WEBPACK_IMPORTED_MODULE_0__.handleSuccess)(_options, res => {
-            return (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(res, {
-              code: 'result'
-            })
-          })
+    /* AuthongMove cjs variable */ var AuthingMove = __webpack_require_authing__(1).default;
+    __webpack_require_authing__.r(__webpack_exports_authing__);
+    /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
+    /* harmony export */   "scanCode": () => (/* binding */ scanCode)
+    /* harmony export */ });
+    function scanCode (options) {
+      return /* AuthingMove replacement */swan.scanCode(options)
+    }
 
-          envContext.scan(_options)
-        },
 
-        /**
-         * 开放接口
-         */
-        login (options = {}) {
-          const _options = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(options)
+    /***/ }),
+    /* 12 */
+    /***/ ((__unused_webpack_module, __webpack_exports_authing__, __webpack_require_authing__) => {
 
-          ;(0,_shared__WEBPACK_IMPORTED_MODULE_0__.handleSuccess)(_options, res => {
-            return (0,_shared__WEBPACK_IMPORTED_MODULE_0__.adaptOptions)(res, {
-              authCode: 'code'
-            })
-          })
+    /* AuthongMove cjs variable */ var AuthingMove = __webpack_require_authing__(1).default;
+    __webpack_require_authing__.r(__webpack_exports_authing__);
+    /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
+    /* harmony export */   "getStorage": () => (/* binding */ getStorage),
+    /* harmony export */   "setStorage": () => (/* binding */ setStorage)
+    /* harmony export */ });
+    function setStorage (options) {
+      options.encrypt = false
+      return /* AuthingMove replacement */swan.setStorage(options)
+    }
 
-          envContext.getAuthCode(_options)
-        }
-      }
+    function getStorage (options) {
+      options.encrypt = false
+      return /* AuthingMove replacement */swan.getStorage(options)
+    }
+
+
+    /***/ }),
+    /* 13 */
+    /***/ ((__unused_webpack_module, __webpack_exports_authing__, __webpack_require_authing__) => {
+
+    /* AuthongMove cjs variable */ var AuthingMove = __webpack_require_authing__(1).default;
+    __webpack_require_authing__.r(__webpack_exports_authing__);
+    /* harmony export */ __webpack_require_authing__.d(__webpack_exports_authing__, {
+    /* harmony export */   "callStorage": () => (/* binding */ callStorage),
+    /* harmony export */   "funcA": () => (/* binding */ funcA)
+    /* harmony export */ });
+    function funcA () {
+      return 'this is function A in baidu mode'
+    }
+
+    function callStorage () {
+      /* AuthingMove replacement */swan.setStorage({
+        key: 'callStorage',
+        data: 'callStorage in baidu'
+      })
     }
 
 
@@ -441,18 +434,6 @@
     /******/ 	};
     /******/ })();
     /******/
-    /******/ /* webpack/runtime/global */
-    /******/ (() => {
-    /******/ 	__webpack_require_authing__.g = (function() {
-    /******/ 		if (typeof globalThis === 'object') return globalThis;
-    /******/ 		try {
-    /******/ 			return this || new Function('return this')();
-    /******/ 		} catch (e) {
-    /******/ 			if (typeof window === 'object') return window;
-    /******/ 		}
-    /******/ 	})();
-    /******/ })();
-    /******/
     /******/ /* webpack/runtime/hasOwnProperty shorthand */
     /******/ (() => {
     /******/ 	__webpack_require_authing__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -480,18 +461,22 @@
     /* harmony export */ });
     /* harmony import */ var _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(1);
     /* harmony import */ var _AuthingMove_api_proxy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(5);
+    /* harmony import */ var _a__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require_authing__(13);
+
+
 
 
 
     _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__["default"].use(_AuthingMove_api_proxy__WEBPACK_IMPORTED_MODULE_1__["default"])
 
-    /* AuthingMove replacement */AuthingMove.setStorageSync('abcdefg', 'abcdefg')
+    _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__["default"].funcA = _a__WEBPACK_IMPORTED_MODULE_2__.funcA
 
-    /* AuthingMove replacement */AuthingMove.showToast({
-      title: 'Toast',
-      icon: 'success',
-      duration: 3000
+    /* AuthingMove replacement */swan.setStorage({
+      key: 'hello321',
+      data: '123hello'
     })
+
+    ;(0,_a__WEBPACK_IMPORTED_MODULE_2__.callStorage)()
 
     /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
