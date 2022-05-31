@@ -15,7 +15,7 @@
     },
     "projectname": "program-swan",
     "setting": {
-        "urlCheck": true
+        "urlCheck": false
     },
     "swan": {
         "baiduboxapp": {
